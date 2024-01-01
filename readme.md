@@ -30,7 +30,6 @@ The game is designed using the principles of OOP. The `HangmanGame` class encaps
 ## Known Issues and Future Improvements
 
 - There is a known bug where if a letter appears more than once in the word, the game only counts it once. This will be addressed in a future update.
-- A future enhancement will be to limit the user to 6 guesses.
 
 ## How to Play
 

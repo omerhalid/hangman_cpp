@@ -11,12 +11,15 @@
 
 using namespace std;
 
+const int START_HEART {6}; 
+
 class HangmanGame
 {
     public:
         bool game_over {false};
         int choice {};
         int random_line {0};
+        int left_chances; // by default every user will start with 6 chanses.
         // HangmanGame();
         // ~HangmanGame();
         void menu();
@@ -26,7 +29,7 @@ class HangmanGame
         void dashes_for_word(string word);
         int random_line_selector();
         string print_the_word(int random_line);
-        bool guess_letter_in_dashed_word(string word);
+        bool guess_letter_in_dashed_word(string word, int &left_chances);
     private:
         string word {};
         string line {};

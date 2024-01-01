@@ -1,7 +1,5 @@
 // BUG: if there is a letter in the word that appears more than once, the game will only count it once
 
-// TODO: User will have 6 guesses
-
 #include "hangman.h"
 
 void HangmanGame :: exit_game()
@@ -92,7 +90,7 @@ string HangmanGame :: print_the_word(int random_line)
 }
 
 
-bool HangmanGame :: guess_letter_in_dashed_word(string word)
+bool HangmanGame :: guess_letter_in_dashed_word(string word, int &left_chances)
 {
     int word_length = word.length();
     int count {0};
@@ -119,7 +117,15 @@ bool HangmanGame :: guess_letter_in_dashed_word(string word)
 
         if (!correct_guess)
         {
+            --left_chances;
             cout << "Incorrect guess, try again." << endl;
+            cout << "You have " << left_chances << " chances left." << endl;
+
+            if (left_chances == 0)
+            {
+                cout << "You lost!" << endl;
+                return false;
+            }
         }
 
         if (count == word_length)
@@ -141,6 +147,8 @@ void HangmanGame :: menu()
 int main(){
     HangmanGame game; // create an instance of HangmanGame
 
+    game.left_chances = START_HEART; // 6 chances in the beginning
+
     while (game.game_over == false){
 
         game.menu();
@@ -155,7 +163,7 @@ int main(){
             string word = game.print_the_word(game.random_line);
             cout << "word: " << word << endl; // for debugging
             game.dashes_for_word(word);
-            game.guess_letter_in_dashed_word(word);
+            game.guess_letter_in_dashed_word(word, game.left_chances);
             break;
         }
         case 2:
