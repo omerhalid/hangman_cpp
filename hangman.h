@@ -8,6 +8,7 @@
 #include <cstdlib> // for rand() and srand()
 #include <ctime> // for time()
 #include <vector>
+#include <set>
 
 using namespace std;
 

@@ -104,14 +104,22 @@ bool HangmanGame :: guess_letter_in_dashed_word(string word, int &left_chances)
         cin >> guess;
 
         bool correct_guess = false;
+
+        set<char> unique_guesses;
+
         for (int i = 0; i < word_length; ++i)
         {
             if (tolower(word[i]) == tolower(guess) && !guessed[i])
             {
                 guessed[i] = true;
-                ++count;
                 cout << "You guessed a letter" << endl;
                 correct_guess = true;
+
+                // If this is the first time this letter has been guessed, increment count
+                if (unique_guesses.insert(tolower(guess)).second)
+                {
+                    ++count;
+                }
             }
         }
 
