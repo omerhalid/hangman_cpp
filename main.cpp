@@ -1,6 +1,8 @@
 // BUG: if there is a letter in the word that appears more than once, the game will only count it once
 
-#include <hangman.h>
+// TODO: User will have 6 guesses
+
+#include "hangman.h"
 
 void HangmanGame :: exit_game()
 {
