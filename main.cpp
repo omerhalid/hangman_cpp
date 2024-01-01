@@ -2,6 +2,94 @@
 
 #include "hangman.h"
 
+void HangmanGame :: current_status_drawing(int &left_chances){
+
+    switch(left_chances){
+        case 6:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        case 5:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "  O   |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        case 4:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "  O   |" << endl;
+            cout << "  |   |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        case 3:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "  O   |" << endl;
+            cout << " /|   |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        case 2:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "  O   |" << endl;
+            cout << " /|\\  |" << endl;
+            cout << "      |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        case 1:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "  O   |" << endl;
+            cout << " /|\\  |" << endl;
+            cout << " /    |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        case 0:
+        {
+            cout << "  +---+" << endl;
+            cout << "  |   |" << endl;
+            cout << "  O   |" << endl;
+            cout << " /|\\  |" << endl;
+            cout << " / \\  |" << endl;
+            cout << "      |" << endl;
+            cout << "=========" << endl;
+            break;
+        }
+        default:
+        {
+            cout << "Invalid number of chances" << endl;
+            break;
+        }
+    }
+}
+
 void HangmanGame :: exit_game()
 {
     cout << "Exiting game..." << endl;
@@ -125,15 +213,18 @@ bool HangmanGame :: guess_letter_in_dashed_word(string word, int &left_chances)
 
         if (!correct_guess)
         {
-            --left_chances;
+            left_chances--;
             cout << "Incorrect guess, try again." << endl;
             cout << "You have " << left_chances << " chances left." << endl;
+
+            current_status_drawing(left_chances);
 
             if (left_chances == 0)
             {
                 cout << "You lost!" << endl;
                 return false;
             }
+            
         }
 
         if (count == word_length)

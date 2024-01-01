@@ -29,6 +29,7 @@ class HangmanGame
         void exit_game();
         void dashes_for_word(string word);
         int random_line_selector();
+        void current_status_drawing(int &left_chances);
         string print_the_word(int random_line);
         bool guess_letter_in_dashed_word(string word, int &left_chances);
     private:
