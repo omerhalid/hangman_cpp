@@ -27,10 +27,6 @@ The game is encapsulated in a class named `HangmanGame`. This class contains bot
 
 The game is designed using the principles of OOP. The `HangmanGame` class encapsulates the data and functions related to the game, providing a clear interface and hiding the implementation details. This makes the code easier to understand, maintain, and modify.
 
-## Known Issues and Future Improvements
-
-- There is a known bug where if a letter appears more than once in the word, the game only counts it once. This will be addressed in a future update.
-
 ## How to Play
 
 The game starts by displaying a menu with three options: Play Game, Add Word, and Exit. The user can choose to start a new game, add a new word to the game, or exit the game. During the game, the user is asked to guess a letter in the hidden word. The game continues until the user guesses the whole word or chooses to exit the game.
