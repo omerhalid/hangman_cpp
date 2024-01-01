@@ -1,16 +1,33 @@
-// use dynamic memory allocation 
-// to be refactored 
+// BUG: if there is a letter in the word that appears more than once, the game will only count it once
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <cstdlib> // for rand() and srand()
-#include <ctime> // for time()
+#include <hangman.h>
 
-using namespace std;
+void HangmanGame :: exit_game()
+{
+    cout << "Exiting game..." << endl;
+    exit(0);
+}
 
-int random_line_selector()
+void HangmanGame :: add_word()
+{
+    cout << "Enter a word to add to the game: ";
+    cin >> word;
+
+    ofstream file("C:\\Users\\halen\\source\\hangman_cpp\\words.txt", ios::app);
+
+    if (!file.is_open())
+    {
+        cout << "File not found" << endl;
+    }
+    else
+    {
+        file<< word << endl;
+    }
+
+    file.close();
+}
+
+int HangmanGame :: random_line_selector()
 {
     ifstream file("C:\\Users\\halen\\source\\hangman_cpp\\words.txt");
     string line;
@@ -37,7 +54,7 @@ int random_line_selector()
 
 }
 
-void dashes_for_word(string &word)
+void HangmanGame :: dashes_for_word(string word)
 {
     for (int i = 0; i < word.length(); ++i)
     {
@@ -47,9 +64,9 @@ void dashes_for_word(string &word)
     cout << word << endl;
 }
 
-string print_the_word(int &random_line)
+string HangmanGame :: print_the_word(int random_line)
 {
-    ifstream file("C:\\Users\\halen\\source\\cpp\\io stream\\words.txt");
+    ifstream file("C:\\Users\\halen\\source\\hangman_cpp\\words.txt");
     string line;
     int count {0};
 
@@ -69,36 +86,50 @@ string print_the_word(int &random_line)
     }
 
     file.close();
-
-    return line;
+    return "";
 }
 
 
-bool guess_letter_in_dashed_word(string &word)
+bool HangmanGame :: guess_letter_in_dashed_word(string word)
 {
     int word_length = word.length();
     int count {0};
     char guess;
-    cout << "Guess a letter: ";
-    cin >> guess;
-    
-    for (int i = 0; i < word.length(); ++i)
+
+    vector<bool> guessed(word_length, false); // track which letters have been guessed
+
+    while (true)
     {
-        if (word[i] == guess)
+        cout << "Guess a letter: ";
+        cin >> guess;
+
+        bool correct_guess = false;
+        for (int i = 0; i < word_length; ++i)
         {
-            ++count;
+            if (tolower(word[i]) == tolower(guess) && !guessed[i])
+            {
+                guessed[i] = true;
+                ++count;
+                cout << "You guessed a letter" << endl;
+                correct_guess = true;
+            }
+        }
+
+        if (!correct_guess)
+        {
+            cout << "Incorrect guess, try again." << endl;
         }
 
         if (count == word_length)
         {
+            cout << "You won!" << endl;
             return true;
         }
-
     }
     return false;
 }
 
-void menu()
+void HangmanGame :: menu()
 {
     cout << "1. Play Game" << endl;
     cout << "2. Add Word" << endl;
@@ -106,28 +137,34 @@ void menu()
 }
 
 int main(){
-    int choice {};
-    int random_line {};
-    
-    menu();
-    cin >> choice;
+    HangmanGame game; // create an instance of HangmanGame
 
-    switch (choice)
+    while (game.game_over == false){
+
+        game.menu();
+        cin >> game.choice;
+
+        switch (game.choice)
     {
         case 1:
         {
-            random_line = random_line_selector();
-            string word = print_the_word(random_line);
-            dashes_for_word(word);
-            guess_letter_in_dashed_word(word);
+            game.random_line = game.random_line_selector();
+            cout << "random line: " << game.random_line << endl; // for debugging
+            string word = game.print_the_word(game.random_line);
+            cout << "word: " << word << endl; // for debugging
+            game.dashes_for_word(word);
+            game.guess_letter_in_dashed_word(word);
             break;
         }
         case 2:
         {
+            game.add_word();
             break;
         }
         case 3:
         {
+            game.exit_game();
+            game.game_over = true;
             break;
         }
         default:
@@ -136,4 +173,7 @@ int main(){
             break;
         }
     }
+    }
+
+    
 }

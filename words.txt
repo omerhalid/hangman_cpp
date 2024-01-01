@@ -3,3 +3,8 @@ loop
 world
 earth
 programming
+music
+python
+case
+turkish
+budapest
